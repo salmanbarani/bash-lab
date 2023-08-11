@@ -9,14 +9,19 @@ int main()
 	    int n;
 	    scanf("%d", &n);
 		
-		int boundary = n - 1;
+		int boundary = (n*2) - 1;
 
-	    char result[100] = "";
-		for (int i=0; i < boundary; i++) {
+		for (int i=0; i < n; i++) {
 			for (int j = 0; j < boundary; j++) {
-				printf("%d: %d", i, j);
+		 	if ( i <= j) {
+				printf("%d", (n-j));
+			  } 
+			 else {
+				printf("*");
+		       	}
 
 			}
+			printf("\n");
 
 		}		
 	    printf("%d\n", boundary);		      
