@@ -1,0 +1,17 @@
+pipneline {
+    agent any
+
+    stages {
+        stage('hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        
+        stage('greeting') {
+            steps {
+                echo 'Greetings from Salman'
+            }
+        }
+    }
+}
