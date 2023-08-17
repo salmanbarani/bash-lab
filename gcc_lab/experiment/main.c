@@ -1,8 +1,6 @@
 #include <stdio.h>
 
 void main() {
-
- 	char c = getchar();
-	putchar(c);
-	printf("\n");
+	int c = 0;
+	printf("%d\n", c = 5);
 }
