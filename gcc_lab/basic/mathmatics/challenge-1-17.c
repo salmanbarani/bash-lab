@@ -1,22 +1,17 @@
 #include <stdio.h>
 #define THRESHOLD 80
-#define MAXLINECHAR 1000
-#define MAXLINE 10 // maximum lines that can be stored in an arry
+#define MAXLINE 1000 
 
 int getLine(char line[], int lim);
 
 
 int main() {
 	int len;
-	int max;	
-	char line[MAXLINECHAR];
-	max = 0;
+	char line[MAXLINE];
 
 	while ((len = getLine(line, MAXLINE)) > 0) {
 		if (len > THRESHOLD)
 			printf("%s\n", line);		
-		else
-			printf("less %d\n", len);
 	}
 		
 	return 0;
