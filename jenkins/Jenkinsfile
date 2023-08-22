@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_IMAGE_NAME = 'my-flask-app'
+        SERVER_ADDRESS = 'your-server-ip'
+        SSH_USER = 'your-ssh-username'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}", ".")
+
+                    // Tag the image as 'latest' for deployment
+                    dockerImage.tag("${DOCKER_IMAGE_NAME}:latest")
+                }
+            }
+        }
+
+        stage('Deploy to Server') {
+            steps {
+                script {
+                    // Copy Docker image to the server using SSH
+                    sshPublisher(
+                        continueOnError: false,
+                        failOnError: true,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'YourSSHConfig',  // Add your SSH configuration from Jenkins
+                                transfers: [
+                                    sshTransfer(
+                                        sourceFiles: "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}.tar",
+                                        remoteDirectory: "/tmp"
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+
+                    // SSH into the server and deploy the Docker image
+                    sshScript(
+                        remote: "${SSH_USER}@${SERVER_ADDRESS}",
+                        script: """
+                            docker load -i /tmp/${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}.tar
+                            docker stop ${DOCKER_IMAGE_NAME} || true
+                            docker rm ${DOCKER_IMAGE_NAME} || true
+                            docker run -d --name ${DOCKER_IMAGE_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}
+                        """
+                    )
+                }
+            }
+        }
+    }
+}
+
