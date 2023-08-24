@@ -42,6 +42,25 @@ int getLine() {
 }
 
 void entab() {
-	// complete this function
+	int i,j,c;
+
+	extern char line[];
+	extern char sline[];
+	extern int n;
+
+	i = 0;
+	j = 0;
+	
+	while ((c = line[i]) != '\0') {
+		int k;	
+		if (c == ' ') {
+			for (k=0; ((c =
+
+		}
+
+
+	}
+
+
 
 }
