@@ -13,11 +13,11 @@ int main() {
 	
 	int len;
 	extern char line[];
-	//extern char sline[];
+	extern char sline[];
 
 	while ((len = getLine()) > 0 ) {
-		printf("%s", line);
-
+		entab();
+		printf("%s", sline);		
 	}
 	return 0;
 
@@ -42,25 +42,32 @@ int getLine() {
 }
 
 void entab() {
-	int i,j,c;
+	int i,j,c,k,bound;
 
 	extern char line[];
 	extern char sline[];
 	extern int n;
 
-	i = 0;
-	j = 0;
+	i = j = 0;
 	
-	while ((c = line[i]) != '\0') {
-		int k;	
-		if (c == ' ') {
-			for (k=0; ((c =
-
+	while ((c=line[i]) != '\0') {
+		k = 0;
+		bound = i + n;	
+		for(j=i; c == ' ' && j < bound; ++j) 
+			if (line[j] == ' ')
+				++k;
+			else
+				break;
+		
+		if (k == n) {
+			sline[j] = '\t';
+			i += k;
+		} else {
+			sline[j] = c;
+			++i;
 		}
-
-
-	}
-
+		++j;
+	}	
 
 
 }
