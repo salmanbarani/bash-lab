@@ -17,7 +17,7 @@ int main() {
 
 	while ((len = getLine()) > 0 ) {
 		entab();
-		printf("%s", sline);		
+		printf("%s\n", sline);		
 	}
 	return 0;
 
@@ -42,7 +42,7 @@ int getLine() {
 }
 
 void entab() {
-	int i,j,c,k,bound;
+	int i,j,c,k,b,bound;
 
 	extern char line[];
 	extern char sline[];
@@ -53,8 +53,8 @@ void entab() {
 	while ((c=line[i]) != '\0') {
 		k = 0;
 		bound = i + n;	
-		for(j=i; c == ' ' && j < bound; ++j) 
-			if (line[j] == ' ')
+		for(b=i; c == ' ' && b < bound; ++b) 
+			if (line[b] == ' ')
 				++k;
 			else
 				break;
