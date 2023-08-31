@@ -14,9 +14,11 @@ int main() {
 	int len;	
 
 	extern char line[]; 
+	extern char mutliLine[];
 
 	while ((len < getLine()) > 0 ) {
-		printf("%s", line);
+		fold();
+		printf("%s", multiLine);	
 	}
 
 	return 0;
@@ -34,4 +36,27 @@ int getLine() {
 	}
 	line[i] = '\0';
 	return i;
+}
+
+void fold() {
+	int i,j,b,counter;
+
+	extern char line[];
+	extern char multiLine[];
+	extern int n;	
+	
+	i = j = counter = 0;
+	while (line[i] != '\0') {
+		if (counter == n) {
+			for (b=j; multiLine[b] != ' ' || multiLine[b] != '\t'; --b) return;
+			j = b;
+			multiLine[j] = '\n';
+			counter = 0;
+		}
+		else
+			multiLine[j] = line[i];
+		++i;
+		++j;
+		++counter;
+	}	
 }
