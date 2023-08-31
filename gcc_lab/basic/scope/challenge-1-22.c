@@ -7,7 +7,7 @@ void fold(void);
 
 char line[MAXLINE];
 char multiLine[MAXLINE];
-int n = 20;
+int n = 80;
 
 
 int main() {
@@ -18,7 +18,7 @@ int main() {
 
 	while ((len < getLine()) > 0 ) {
 		fold();
-		printf("%s", multiLine);	
+		printf("%s\n", multiLine);	
 	}
 
 	return 0;
@@ -48,13 +48,15 @@ void fold() {
 	i = j = counter = 0;
 	while (line[i] != '\0') {
 		if (counter == n) {
-			for (b=j; multiLine[b] != ' ' || multiLine[b] != '\t'; --b) return;
+			for (b=j; multiLine[b] == ' ' || multiLine[b] == '\t' || b == 0; --b) return;
 			j = b;
 			multiLine[j] = '\n';
 			counter = 0;
+			--i;
 		}
 		else
 			multiLine[j] = line[i];
+		
 		++i;
 		++j;
 		++counter;
