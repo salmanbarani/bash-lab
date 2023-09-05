@@ -3,7 +3,7 @@
 #define MAXLINE 300
 
 char line[MAXLINE];
-char clearLine[MAXLINE];
+char cleardLine[MAXLINE];
 
 
 int getLine(void);
@@ -12,13 +12,15 @@ void unComment(void);
 int main() {
 	int len;
 	extern char line [];
-	
+
 	while ((len = getLine()) > 0) {
 		printf("%s\n", line);
 	}
 
 	return 0;
 }
+
+char salman[] /* = "Salman is coming home" */;
 
 int getLine(){
 	int i,c;
@@ -33,4 +35,11 @@ int getLine(){
 	}
 	line[i] = '\0';
 	return i;
+}
+
+void unComment() {
+	extern char line [];
+	extern char cleardLine [];
+	// Fill the code;
+
 }
