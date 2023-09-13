@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #define MAXLINE 300
 
@@ -7,20 +8,20 @@ char cleardLine[MAXLINE];
 
 
 int getLine(void);
-void unComment(void);
+void unComment(int len);
 
 int main() {
 	int len;
 	extern char line [];
+	extern char cleardLine [];
 
 	while ((len = getLine()) > 0) {
-		printf("%s\n", line);
+		unComment(len);
+		printf("%s\n", cleardLine);
 	}
 
 	return 0;
-}
-
-char salman[] /* = "Salman is coming home" */;
+} 
 
 int getLine(){
 	int i,c;
@@ -37,9 +38,39 @@ int getLine(){
 	return i;
 }
 
-void unComment() {
+void unComment(int len) {
 	extern char line [];
 	extern char cleardLine [];
-	// Fill the code;
+
+	bool isComment, isMultiLineComment;
+	int i, j, c, nextC;		
+	
+	isComment = isMultiLineComment = false;
+	i = j = 0;	
+
+	while ((c=line[i]) != '\n' || c != '\0'){
+		printf("i=%d j=%c\n",i,c);	
+		nextC = line[i+1];
+	
+		if (i >= len)
+			break;
+	
+		if (c == '/' && (nextC == '/' || nextC == '*')){
+			isComment = true;
+			isMultiLineComment = nextC == '*' ? true : false;
+		}
+		else if (isComment && (c == '*' && nextC == '/')) {
+			if (isMultiLineComment) {	
+				isComment = false;	
+				isMultiLineComment = false;
+				i += 2;
+			}
+		}
+		if (!isComment){ 	
+			cleardLine[j] = line[i];
+			++j;
+		}
+		++i;
+	}
 
 }
