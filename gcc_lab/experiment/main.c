@@ -1,6 +1,9 @@
 #include <stdio.h>
 
+char CONS = '\0';
+char NULL_CHAR = '\0';
+
+
 void main() {
-	int c = 0;
-	printf("%d,%d\n", '5', '0');
+	printf("%c\n", NULL_CHAR);
 }
